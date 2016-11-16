@@ -2,58 +2,53 @@ import os
 import requests
 import json
 from flask import Flask, request
+import urllib
 app = Flask(__name__)
 cities_info = None
-headers = {"X-Access-Token": "8bfc8f2a2c28ae32b9c76fca9c50c360"}
+
+#travelpayouts.com token
+travelpayoutsheaders = {"X-Access-Token": "8bfc8f2a2c28ae32b9c76fca9c50c360"}
+#skyscanner token
+skyscannerapikey = 'ba429833397294416692521632122922'
 
 @app.route("/")
 def hello():
     return "Hello World!"
 
-#example http://127.0.0.1/city_code?name=Москва
+#example http://127.0.0.1:5000/city_code?name=Москва
 @app.route("/city_code")
 def avia():
     return get_iata(request.args.get('name'))
 
-#
+#example http://127.0.0.1:5000/tickets?origin=MOW&destination=OMS&date=2016-12-29
 @app.route("/tickets")
 def tickets():
     origin = request.args.get('origin')
     destination = request.args.get('destination')
+    date = request.args.get('date')
 
-    return str(get_avia_info_latestPrices(origin, destination))
+    return str(get_tickets(origin, destination, date))
 
+#documentation - https://support.business.skyscanner.net/hc/en-us/articles/211487049-Cheapest-quotes
+#example -       get_tickets('MOW','OMS','2016-12-29')
+#valid date -    yyyy-MM-dd or yyyy-MM
+def get_tickets(origin, destination, date):
+    endpoint = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/RU/RUB/ru-RU/'+origin+'/'+destination+'/'+date+'?apiKey='+skyscannerapikey
 
-def get_avia_info_latestPrices(origin, destination, period_type = 'year', one_way = 'true', page = 1, limit = 30, show_to_affiliates = 'false', trip_class = 0, trip_duration = 100):
-    endpoint = "http://api.travelpayouts.com/v2/prices/latest"
-    params = {
-            'currency':'rub',
-            'sorting':'price',
-            'origin':origin,
-            'destination':destination,
-            'period_type':period_type,
-            'one_way':one_way,
-            'page':str(page),
-            'limit':str(limit),
-            'show_to_affiliates':show_to_affiliates,
-            'trip_class':trip_class
-        }
-    response = requests.get(endpoint, params = params, headers = headers)
-    return response.json()
+    return requests.get(endpoint, headers = {"Accept":"application/json"}).json()
 
-def get_avia_tickets(origin, destination, depart_date, return_date):
-    
-    return ""
-
+#get IATA code of city by it's name in russian
 def get_iata(city_name):
-    
-    endpoint = 'https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru'
-
     global cities_info
     if cities_info is None:
-        cities_info = requests.get(endpoint).json()['response']
+        cities_info = requests.get('https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru').json()['response']
         
     return str(next(x for x in cities_info if x['name'] == city_name))
+
+
+
+
+
 
 
 if __name__ == "__main__":
