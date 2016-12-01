@@ -6,6 +6,7 @@ import json
 from flask import Flask, request
 import urllib
 import time
+from flask.json import jsonify
 
 app = Flask(__name__)
 
@@ -26,7 +27,7 @@ def page_hello():
 #example http://127.0.0.1:5000/places_avia?name=Москва
 @app.route("/places_avia")
 def page_places_avia():
-    return str(autosuggest_list(request.args.get('name')))
+    return jsonify(autosuggest_list(request.args.get('name')))
 
 #get all tickets info between two points
 #example
@@ -44,7 +45,7 @@ def page_tickets():
     if 'raw' in request.args:
         return str(get_tickets_data(origin, destination, date))
 
-    return str(get_formated_tickets_data(get_tickets_data(origin, destination, date)))
+    return jsonify(get_formated_tickets_data(get_tickets_data(origin, destination, date)))
 
 ########### ##### ###########
 
