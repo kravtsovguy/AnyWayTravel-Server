@@ -3,10 +3,9 @@
 import os
 import requests
 import json
-from flask import Flask, request, Response
+from flask import Flask, request
 import urllib
 import time
-from flask.helpers import make_response
 
 app = Flask(__name__)
 
@@ -42,7 +41,7 @@ def page_hello():
 def page_places_avia():
     data = autosuggest_list(request.args.get('name'))
     
-    return myjsonify(data)
+    return str(data)
 
 #get all tickets info between two points
 #example
