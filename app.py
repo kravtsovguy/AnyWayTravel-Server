@@ -3,7 +3,7 @@
 import os
 import requests
 import json
-from flask import Flask, request
+from flask import Flask, request, Response
 import urllib
 import time
 
@@ -20,13 +20,13 @@ def myjsonify(data):
     indent = None
     separators = (',', ':')
 
-    if app.config['JSONIFY_PRETTYPRINT_REGULAR'] and not request.is_xhr:
+    if not request.is_xhr:
         indent = 2
         separators = (', ', ': ')
 
-    return app.response_class(
+    return Response(
         (json.dumps(data, indent=indent, separators=separators, ensure_ascii=False), '\n'),
-        mimetype=app.config['JSONIFY_MIMETYPE']
+        mimetype='application/json'
     )
 
 ########### pages ###########
@@ -41,7 +41,7 @@ def page_hello():
 def page_places_avia():
     data = autosuggest_list(request.args.get('name'))
     
-    return str(data)
+    return myjsonify(data)
 
 #get all tickets info between two points
 #example
