@@ -3,10 +3,10 @@
 import os
 import requests
 import json
-from flask import Flask, request
+from flask import Flask, request, Response
 import urllib
 import time
-from flask.json import jsonify
+from flask.helpers import make_response
 
 app = Flask(__name__)
 
@@ -16,6 +16,19 @@ cities_info = None
 travelpayoutsheaders = {"X-Access-Token": "8bfc8f2a2c28ae32b9c76fca9c50c360"}
 #skyscanner token
 skyscannerapikey = 'prtl6749387986743898559646983194'#'ba429833397294416692521632122922'
+
+def myjsonify(data):
+    indent = None
+    separators = (',', ':')
+
+    if app.config['JSONIFY_PRETTYPRINT_REGULAR'] and not request.is_xhr:
+        indent = 2
+        separators = (', ', ': ')
+
+    return app.response_class(
+        (json.dumps(data, indent=indent, separators=separators, ensure_ascii=False), '\n'),
+        mimetype=app.config['JSONIFY_MIMETYPE']
+    )
 
 ########### pages ###########
 
@@ -27,7 +40,9 @@ def page_hello():
 #example http://127.0.0.1:5000/places_avia?name=Москва
 @app.route("/places_avia")
 def page_places_avia():
-    return jsonify(autosuggest_list(request.args.get('name')))
+    data = autosuggest_list(request.args.get('name'))
+    
+    return myjsonify(data)
 
 #get all tickets info between two points
 #example
@@ -45,7 +60,7 @@ def page_tickets():
     if 'raw' in request.args:
         return str(get_tickets_data(origin, destination, date))
 
-    return jsonify(get_formated_tickets_data(get_tickets_data(origin, destination, date)))
+    return myjsonify(get_formated_tickets_data(get_tickets_data(origin, destination, date)))
 
 ########### ##### ###########
 
@@ -110,7 +125,8 @@ def get_formated_tickets_data(data):
         for option in pricing_options:
             option['Agent'] = next(x for x in data['Agents'] if x['Id'] == option['Agents'][0])
             option.pop('Agents')
-            option.pop('Status')
+            if 'Status' in option:
+                option.pop('Status')
 
         air_formatted.append({
             'type':'flight',
