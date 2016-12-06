@@ -152,6 +152,7 @@ def get_formated_tickets_data(data):
                 'destination' : make_place(next(x for x in data['Places'] if x['Id'] == seg['DestinationStation'])),
                 'departure' : seg['DepartureDateTime'], 
                 'arrival' : seg['ArrivalDateTime'],  
+                'pricing' : '',
                 'type' : 'Plane', # , Train
                 'carrier' : {
                     'name' : carry['Name'],
@@ -161,9 +162,10 @@ def get_formated_tickets_data(data):
                     }
                 })
 
+        segments[0]['pricing'] = make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)
+
         paths.append({
-            'segments':segments,
-            'pricing' : make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)
+            'segments':segments
             })
 
     return {
