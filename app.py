@@ -163,7 +163,7 @@ def get_formated_tickets_data(data):
 
         paths.append({
             'segments':segments,
-            'pricing' : [make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)]
+            'pricing' : make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)
             })
 
     return {
