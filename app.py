@@ -10,11 +10,13 @@ import time
 app = Flask(__name__)
 
 cities_info = None
+places_cache = { }
 
 #travelpayouts.com token
 travelpayoutsheaders = {"X-Access-Token": "8bfc8f2a2c28ae32b9c76fca9c50c360"}
 #skyscanner token
-skyscannerapikey = 'prtl6749387986743898559646983194'#'ba429833397294416692521632122922'
+skyscannerapikey = 'prtl6749387986743898559646983194' #public key
+#skyscannerapikey = 'ba429833397294416692521632122922' #our key
 
 def myjsonify(data):
     indent = None
@@ -28,6 +30,16 @@ def myjsonify(data):
         (json.dumps(data, indent=indent, separators=separators, ensure_ascii=False), '\n'),
         mimetype='application/json'
     )
+
+
+
+
+
+
+
+
+
+
 
 ########### pages ###########
 
@@ -45,7 +57,7 @@ def page_places_avia():
 
 #get all tickets info between two points
 #example
-#http://127.0.0.1:5000/tickets?origin=MOW&destination=OMS&date=2016-12-29
+#http://127.0.0.1:5000/tickets?origin=MOSC-sky&destination=OMS-sky&date=2016-12-29
 #example - 'MOW','OMS','2016-12-29'
 #valid date - yyyy-MM-dd or yyyy-MM
 #documentation -
@@ -57,14 +69,29 @@ def page_tickets():
     date = request.args.get('date')
 
     if 'raw' in request.args:
-        return str(get_tickets_data(origin, destination, date))
+        return myjsonify((get_tickets_data(origin, destination, date)))
 
     return myjsonify(get_formated_tickets_data(get_tickets_data(origin, destination, date)))
 
 ########### ##### ###########
 
+
+
+
+
+
+
+
+
+
+
+
+
 def autosuggest_list(name):
     return requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/RU/RUB/ru-RU?query=' + name + '&apiKey=' + skyscannerapikey, headers = {'Accept' : 'application/json'}).json()
+
+def get_place_info(placeid):
+    return requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/RU/RUB/ru-RU?id=' + placeid + '&apiKey=' + skyscannerapikey, headers = {'Accept' : 'application/json'}).json()
 
 #get IATA code of city by it's name in russian
 def get_iata(city_name):
@@ -74,7 +101,7 @@ def get_iata(city_name):
         
     return str(next(x for x in cities_info if x['name'] == city_name))
 
-#json data (not string) of tickets between two points
+#json data of tickets between two points
 def get_tickets_data(origin, destination, date):
     params = {
         'apiKey':skyscannerapikey,
@@ -111,40 +138,41 @@ def get_formated_tickets_data(data):
     if not 'Legs' in data:
         return data
 
-    air_formatted = []
+    paths = []
 
     for leg in data['Legs']:
-        
-        origin_place = next(x for x in data['Places'] if x['Id'] == leg['OriginStation'])
-        destination_place = next(x for x in data['Places'] if x['Id'] == leg['DestinationStation'])
-        #carriers = [x for x in data['Carriers'] if x['Id'] in leg['Carriers']]
-        segments = [format_segment(x, data) for x in data['Segments'] if x['Id'] in leg['SegmentIds']]
-        pricing_options = next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions']
+        segments = []
 
-        for option in pricing_options:
-            option['Agent'] = next(x for x in data['Agents'] if x['Id'] == option['Agents'][0])
-            option.pop('Agents')
-            if 'Status' in option:
-                option.pop('Status')
+        for segid in leg['SegmentIds']:
+            seg = next(x for x in data['Segments'] if x['Id'] == segid)
+            carry = next(x for x in data['Carriers'] if x['Id'] == seg['Carrier'])
 
-        air_formatted.append({
-            'type':'flight',
-            'origin':format_place(origin_place, data['Places']),
-            'destination':format_place(destination_place, data['Places']),
-            'lowestprice':pricing_options[0]['Price'],
-            'pricing':pricing_options,
-            'departure':leg['Departure'],
-            'arrival':leg['Arrival'],
-            #'carriers':carriers,
+            segments.append({
+                'origin' : make_place(next(x for x in data['Places'] if x['Id'] == seg['OriginStation'])),
+                'destination' : make_place(next(x for x in data['Places'] if x['Id'] == seg['DestinationStation'])),
+                'departure' : seg['DepartureDateTime'], 
+                'arrival' : seg['ArrivalDateTime'],  
+                'type' : 'Plane', # , Train
+                'carrier' : {
+                    'name' : carry['Name'],
+                    'image' : carry['ImageUrl'],
+                    'flightNumber' : seg['FlightNumber'],
+                    'code' : carry['Code']
+                },
+                'pricing' : [make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)]
+                })
+
+        paths.append({
             'segments':segments
             })
 
     return {
-        #place ids in 'Query' are strings but anywhere else they are integers
-        'origin':format_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['OriginPlace'])),data['Places']),
-        'destination':format_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['DestinationPlace'])),data['Places']),
-        'departure':data['Query']['OutboundDate'],
-        'routes':air_formatted
+        'route': {
+            'origin' : make_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['OriginPlace']))),
+            'destination' : make_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['DestinationPlace']))),
+            'departure' : data['Query']['OutboundDate'],
+            'paths' : paths
+            }
         }
 
 def format_place(place, all):
@@ -170,6 +198,50 @@ def format_segment(segment, data):
         }
 
     return segment
+
+def make_place(placeinf):
+    print(placeinf['Code'])
+
+    global places_cache
+
+    if placeinf['Code'] in places_cache:
+        return places_cache[placeinf['Code']]
+
+    raw = get_place_info(placeinf['Code'])
+    inf = {}
+    if('Places' in raw):
+        inf = raw['Places'][0]
+    else:
+        inf = autosuggest_list(placeinf['Name'])['Places'][0]
+
+    res = {
+        'id' : inf['PlaceId'],
+        'iata' : inf['PlaceId'].split("-")[0],
+        'name' : inf['PlaceName'],
+        'country' : inf['CountryName'],
+        'city' : inf['PlaceName'].split(" ")[0]
+    }
+
+    places_cache[placeinf['Code']] = res
+
+    return res
+
+def make_pricing_options(options, data):
+    res = []
+    for opt in options:
+        agent = next(x for x in data['Agents'] if x['Id'] == opt['Agents'][0])
+        res.append({
+            'price' : opt['Price'],
+            'currency' : data['Query']['Currency'],
+            'link' : opt['DeeplinkUrl'],
+            'agent' : {
+                'name' : agent['Name'],
+                'image' : agent['ImageUrl']
+            }
+        })
+
+    return res
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
