@@ -158,12 +158,12 @@ def get_formated_tickets_data(data):
                     'image' : carry['ImageUrl'],
                     'flightNumber' : seg['FlightNumber'],
                     'code' : carry['Code']
-                },
-                'pricing' : [make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)]
+                    }
                 })
 
         paths.append({
-            'segments':segments
+            'segments':segments,
+            'pricing' : [make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)]
             })
 
     return {
@@ -200,8 +200,6 @@ def format_segment(segment, data):
     return segment
 
 def make_place(placeinf):
-    print(placeinf['Code'])
-
     global places_cache
 
     if placeinf['Code'] in places_cache:
