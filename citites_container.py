@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 cities = [
   {
@@ -43878,3 +43878,4 @@ cities = [
     "name": "Кофу"
   }
 ]
+

@@ -18,6 +18,7 @@ requests_log = ''
 start_time = time.time()
 
 def inc_requests_counter():
+    return 0
     global requests_count
     requests_count += 1
     global requests_log
