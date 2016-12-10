@@ -17,9 +17,6 @@ import myutils
 
 apikey = 'prtl6749387986743898559646983194'
 
-cities_info = None
-places_cache = { }
-
 '''
     returns an array of 
     { 
@@ -43,22 +40,32 @@ def find_places(name=None, id=None):
 
     return requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/RU/RUB/ru-RU', params = p, headers = {'Accept' : 'application/json'}).json()['Places']
 
-'''
-    origin - MOSC-sky
-    destination - OMS-sky
-'''
 def get_tickets(origin, destination, date):
+    '''
+    :param origin: Москва
+    :param destination: Омск
+    '''
     return format_tickets_data(get_tickets_rawdata(origin, destination, date))
 
 def get_tickets_rawdata(origin, destination, date):
+
+    o = find_places(origin)
+    d = find_places(destination)
+
+    check = myutils.check_zero_len(o, d, origin, destination, 'no such airport')
+    if not check == 'ok':
+        return check
+    o = o[0]['PlaceId']
+    d = d[0]['PlaceId']
+
     params = {
         'apiKey':apikey,
-        'outbounddate':'2016-12-29',
+        'outbounddate':date,
         'country':'RU',
         'currency':'RUB',
         'locale':'ru-RU',
-        'originplace':(origin),
-        'destinationplace':(destination)
+        'originplace':o,
+        'destinationplace':d
         }
     r = requests.post('http://partners.api.skyscanner.net/apiservices/pricing/v1.0', data = params)
 
@@ -86,8 +93,8 @@ def format_tickets_data(data):
 
             segments.append({
                 'type' : 'Plane',
-                'origin' : find_make_place(next(x for x in data['Places'] if x['Id'] == seg['OriginStation'])['Name']),
-                'destination' : find_make_place(next(x for x in data['Places'] if x['Id'] == seg['DestinationStation'])['Name']),
+                'origin' : myutils.find_make_place(next(x for x in data['Places'] if x['Id'] == seg['OriginStation'])['Name']),
+                'destination' : myutils.find_make_place(next(x for x in data['Places'] if x['Id'] == seg['DestinationStation'])['Name']),
                 'departure' : seg['DepartureDateTime'], 
                 'arrival' : seg['ArrivalDateTime'],  
                 'duration' : seg['Duration'],
@@ -108,43 +115,12 @@ def format_tickets_data(data):
 
     return {
         'route': {
-            'origin' : find_make_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['OriginPlace']))['Name']),
-            'destination' : find_make_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['DestinationPlace']))['Name']),
+            'origin' : myutils.find_make_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['OriginPlace']))['Name']),
+            'destination' : myutils.find_make_place(next(x for x in data['Places'] if x['Id'] == int(data['Query']['DestinationPlace']))['Name']),
             'departure' : data['Query']['OutboundDate'],
             'paths' : paths
             }
         }
-
-def find_make_place(placename):
-    global places_cache
-    if placename in places_cache:
-        return places_cache[placename]
-
-    p = find_places(placename)[0]
-    '''
-    p
-    {
-        'CountryId' : 'RU-sky',
-        'RegionId' : '',
-        'CityId' : 'MOSC-sky',
-        'CountryName' : 'Россия',
-        'PlaceId' : 'MOSC-sky',
-        'PlaceName' : 'Москва'
-    }
-    '''
-
-    code = p['PlaceId'].split('-')[0]
-
-    res = {
-        'id' : p['PlaceId'],
-        'iata' : p['PlaceId'].split("-")[0],
-        'name' : p['PlaceName'],
-        'country' : p['CountryName'],
-        'city' : p['PlaceName'].split(" ")[0]
-    }
-
-    places_cache[placename] = res
-    return res
 
 def make_pricing_options(options, data):
     res = []
@@ -161,12 +137,3 @@ def make_pricing_options(options, data):
         })
 
     return res
-
-'''
-    get IATA code of city by it's name in russian
-'''
-def get_iata(city_name):
-    global cities_info
-    if cities_info is None:
-        cities_info = requests.get('https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru').json()['response']
-    return str(next(x for x in cities_info if x['name'].lower() == city_name.lower()))

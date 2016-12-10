@@ -16,7 +16,7 @@ import myutils
 places_cache = { }
 
 def find_places(namepart):
-    """Find places
+    """Find places.
     returns an array of 
     { 
         'name' : 'МОСКВА',  (upper case only)
@@ -29,24 +29,42 @@ def find_places(namepart):
         return []
     res = sorted(r.json(), key=lambda k: -(k['S'] + k['L'])) 
     res = [{'name':item['n'], 'code':item['c']} for item in res if namepart in item['n']]
+
+
     return res
 
 def get_tickets(origin, destination, date):
     """Get tickets.
 
-    :param origin: MOSC-sky
-    :param destination: OMS-sky
+    :param origin: Москва
+    :param destination: Омск
     """
-    op = avia.find_places(id = origin)[0]
-    dp = avia.find_places(id = destination)[0]
-    rzd_origin = find_places(   op['PlaceName']   )[0]
-    rzd_destin = find_places(   dp['PlaceName']   )[0]
-    rzd_date = date_to_retarded_rzd_date(date)
-    return format_tickets_data(get_tickets_rawdata(rzd_origin, rzd_destin, rzd_date))
+    return format_tickets_data(get_tickets_rawdata(origin, destination, date))
 
 def get_tickets_rawdata(origin, destination, date):
     """get_tickets_rawdata(find_places('москва')[0], find_places('омск')[0], '30.12.2016')
     """
+
+    o = myutils.find_cities(origin)
+    d = myutils.find_cities(destination)
+
+    check = myutils.check_zero_len(o, d, origin, destination, 'no such city')
+    if not check == 'ok':
+        return check
+    o = o[0]
+    d = d[0]
+
+    o = find_places(o['name'])
+    d = find_places(d['name'])
+
+    check = myutils.check_zero_len(o, d, origin, destination, 'no such train station')
+    if not check == 'ok':
+        return check
+    o = o[0]
+    d = d[0]
+
+    rzd_date = date_to_retarded_rzd_date(date)
+
     requesturi = 'http://pass.rzd.ru/timetable/public/ru'
     _params = {
         'STRUCTURE_ID':'735',
@@ -56,10 +74,10 @@ def get_tickets_rawdata(origin, destination, date):
         'checkSeats':'1',
 
         #'st0':origin.name,
-        'code0':origin['code'],
+        'code0':o['code'],
         #'st1':destination.name,
-        'code1':destination['code'],
-        'dt0':date
+        'code1':d['code'],
+        'dt0':rzd_date
         }
 
     r = requests.get(requesturi, params = _params)
@@ -91,8 +109,8 @@ def format_tickets_data(data):
         if 'brand' in route and route['brand']=='': del route['brand']
         segment = {
             'type' : 'Train',
-            'origin' : avia.find_make_place(route['station0']),
-            'destination' : avia.find_make_place(route['station1']),
+            'origin' : myutils.find_make_place(route['station0']),
+            'destination' : myutils.find_make_place(route['station1']),
             'departure' : retarded_date_time_to_good(route['date0'], route['time0']), 
             'arrival' : retarded_date_time_to_good(route['date1'], route['time1']),
             'duration' : retarded_duration_to_minutes(route['timeInWay']),
@@ -111,15 +129,15 @@ def format_tickets_data(data):
         
     return {
         'route': {
-            'origin' : avia.find_make_place(data['tp'][0]['from']),
-            'destination' : avia.find_make_place(data['tp'][0]['where']),
+            'origin' : myutils.find_make_place(data['tp'][0]['from']),
+            'destination' : myutils.find_make_place(data['tp'][0]['where']),
             'departure' : retarded_date_time_to_good(data['tp'][0]['date']),
             'paths' : paths
             }
         }
 
 def retarded_duration_to_minutes(rzd_duration):
-    """
+    """Convert hours into minutes.
     :param rzd_duration: '47:14'
     :return: '2834'
     """
@@ -127,7 +145,7 @@ def retarded_duration_to_minutes(rzd_duration):
     return str(int(s[0])*60 + int(s[1]))
 
 def retarded_date_time_to_good(rzd_date, rzd_time = ''):
-    """Converts rzd_date and rzd_time to normal dateTtime.
+    """Convert rzd_date and rzd_time to normal dateTtime.
 
     :param rzd_date: '29.12.2016'
     :param rzd_time: '16:40'
@@ -145,7 +163,7 @@ def retarded_date_time_to_good(rzd_date, rzd_time = ''):
     return date + _time
 
 def date_to_retarded_rzd_date(date):
-    """Converts normal date to rzd_date.
+    """Convert normal date to rzd_date.
 
     :param date: '2016-12-29'
 
