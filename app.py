@@ -13,6 +13,11 @@ import time
 
 app = Flask(__name__)
 
+import sys
+# sys.setdefaultencoding() does not exist, here!
+#reload(sys)  # Reload does the trick!
+print(sys.getdefaultencoding())
+
 requests_count = 0
 requests_log = ''
 start_time = time.time()
