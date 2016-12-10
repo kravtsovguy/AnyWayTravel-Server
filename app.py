@@ -36,7 +36,6 @@ def page_test():
     from os import listdir, getcwd
     from os.path import isfile, join
     a = listdir(getcwd())
-    return jsonify(a)
 
     s = '<p>Valid links:</p>\n'
     arr = [
@@ -56,7 +55,7 @@ def page_test():
 
     s += '<p>Requests completed: %d</p>' % requests_count
 
-    return s
+    return s +'\n\n'+ str(a)
 
 @app.route("/")
 def page_hello():

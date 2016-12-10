@@ -34,10 +34,8 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-import codecs
-f = codecs.open('cities.json', 'r', 'utf_8_sig')
-cities_names = json.loads(f.read())
-f.close()
+import citites_container
+cities_names = citites_container.cities
 def find_cities(name_part, limit = 100):
     '''get array of city names by a part of it's names
     '''
