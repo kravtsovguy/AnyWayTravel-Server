@@ -96,10 +96,13 @@ def page_trains():
 
 @app.route("/city_suggestions")
 def page_city_suggestions():
-    namepart = request.args.get('namepart')
-    limit = 100 if not 'limit' in request.args else int(request.args.get('limit'))
-    inc_requests_counter()
-    return jsonify(myutils.find_cities(namepart, limit))
+    try:
+        namepart = request.args.get('namepart')
+        limit = 100 if not 'limit' in request.args else int(request.args.get('limit'))
+        inc_requests_counter()
+        return jsonify(myutils.find_cities(namepart, limit))
+    except:
+        return("Unexpected error:", sys.exc_info()[0])
 
 #######################
 
