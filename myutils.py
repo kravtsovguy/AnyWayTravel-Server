@@ -5,6 +5,7 @@ import time
 import json
 import re
 import avia
+import codecs
 
 def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, headers = {}, result_return_condition = (lambda r: True)):
     r = {}
@@ -34,7 +35,6 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-import codecs
 f = codecs.open('cities.json', "r", "utf_8" )
 cities_names = json.loads(f.read())
 f.close()
@@ -45,11 +45,12 @@ def find_cities(name_part, limit = 100):
     global cities_names
 
     regexp = re.compile(r'(^|\W)%s' % name_part, re.IGNORECASE)
-    res = [x for x in cities_names if regexp.search(x['name']) is not None][:limit]
+    res = [x for x in cities_names if regexp.search(x['name']) is not None]
     #for r in res:
     #    aviaplaces = avia.find_places(r['name'])
     #    r['PlaceId'] = '' if len(aviaplaces) == 0 else aviaplaces[0]['PlaceId']
-    return res
+    res.sort(key = lambda k: k['name'])
+    return ([x for x in res if x['country'] == 'Россия'] + [x for x in res if not x['country'] == 'Россия'])[:limit]
 
 def get_iata(city_name):
     '''get IATA code of a city by it's name in russian
