@@ -34,8 +34,8 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-import citites_container
-cities_names = citites_container.cities
+from citites_container import cities
+cities_names = cities
 def find_cities(name_part, limit = 100):
     '''get array of city names by a part of it's names
     '''
@@ -72,7 +72,7 @@ def find_make_place(placename):
     if placename in places_cache:
         return places_cache[placename]
 
-    places_found = avia.find_places(placename)
+    places_found = find_places(placename)
     res = { }
 
     if len(places_found) == 0:

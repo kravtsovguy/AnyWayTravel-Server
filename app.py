@@ -13,11 +13,6 @@ import time
 
 app = Flask(__name__)
 
-import sys
-# sys.setdefaultencoding() does not exist, here!
-#reload(sys)  # Reload does the trick!
-print(sys.getdefaultencoding())
-
 requests_count = 0
 requests_log = ''
 start_time = time.time()
@@ -61,7 +56,8 @@ def page_test():
 
     s += '<p>Requests completed: %d</p>' % requests_count
 
-    return s +'\n\n'+ str(a)
+    import sys
+    return sys.getdefaultencoding() + '\n\n' + s +'\n\n'+ str(a)
 
 @app.route("/")
 def page_hello():
