@@ -34,9 +34,11 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-f = open('app\cities.json')
-cities_names = json.loads(f.read())
-f.close()
+
+
+#f = open('app\\cities.json')
+#cities_names = json.loads(f.read())
+#f.close()
 def find_cities(name_part, limit = 100):
     '''get array of city names by a part of it's names
     '''

@@ -33,6 +33,11 @@ def page_log():
 
 @app.route("/test")
 def page_test():
+    from os import listdir, getcwd
+    from os.path import isfile, join
+    a = listdir(getcwd())
+    return jsonify(a)
+
     s = '<p>Valid links:</p>\n'
     arr = [
         "/city_suggestions?namepart=пете&limit=5",
