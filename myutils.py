@@ -34,8 +34,10 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-from citites_container import cities
-cities_names = cities
+f = open('cities.json')
+cities_names = json.loads(f.read())
+f.close()
+print('loaded %d cities from cities.json'%len(cities_names))
 def find_cities(name_part, limit = 100):
     '''get array of city names by a part of it's names
     '''
@@ -48,11 +50,12 @@ def find_cities(name_part, limit = 100):
     #    r['PlaceId'] = '' if len(aviaplaces) == 0 else aviaplaces[0]['PlaceId']
     return res
 
-cities_info = requests.get('https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru').json()['response']
 def get_iata(city_name):
     '''get IATA code of a city by it's name in russian
     '''
     global cities_info
+    if cities_info is None:
+        cities_info = requests.get('https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru').json()['response']
     city_name = city_name.lower()
     return str(next(x for x in cities_info if x['name'].lower() == city_name))
 
@@ -72,7 +75,7 @@ def find_make_place(placename):
     if placename in places_cache:
         return places_cache[placename]
 
-    places_found = find_places(placename)
+    places_found = avia.find_places(placename)
     res = { }
 
     if len(places_found) == 0:
