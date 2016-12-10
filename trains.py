@@ -113,7 +113,7 @@ def format_tickets_data(data):
             'destination' : myutils.find_make_place(route['station1']),
             'departure' : retarded_date_time_to_good(route['date0'], route['time0']), 
             'arrival' : retarded_date_time_to_good(route['date1'], route['time1']),
-            'duration' : retarded_duration_to_minutes(route['timeInWay']),
+            'duration' : int(retarded_duration_to_minutes(route['timeInWay'])),
             'pricing' : get_pricing(route, data['tp'][0]),
             'carrier' : {
                 'name' : route['carrier'],
@@ -179,7 +179,7 @@ def get_pricing(route, tp):
 
     for car in route['cars']:
         res.append({
-            'price' : car["tariff"],
+            'price' : float(car["tariff"]),
             'currency' : 'RUB',
             'link' : link,
             'agent' : {

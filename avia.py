@@ -97,7 +97,7 @@ def format_tickets_data(data):
                 'destination' : myutils.find_make_place(next(x for x in data['Places'] if x['Id'] == seg['DestinationStation'])['Name']),
                 'departure' : seg['DepartureDateTime'], 
                 'arrival' : seg['ArrivalDateTime'],  
-                'duration' : seg['Duration'],
+                'duration' : int(seg['Duration']),
                 'pricing' : [],
                 'carrier' : {
                     'name' : carry['Name'],
@@ -127,7 +127,7 @@ def make_pricing_options(options, data):
     for opt in options:
         agent = next(x for x in data['Agents'] if x['Id'] == opt['Agents'][0])
         res.append({
-            'price' : opt['Price'],
+            'price' : float(opt['Price']),
             'currency' : data['Query']['Currency'],
             'link' : opt['DeeplinkUrl'],
             'agent' : {

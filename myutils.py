@@ -34,7 +34,8 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-f = open('cities.json')
+import codecs
+f = codecs.open('cities.json', "r", "utf_8" )
 cities_names = json.loads(f.read())
 f.close()
 print('loaded %d cities from cities.json'%len(cities_names))
