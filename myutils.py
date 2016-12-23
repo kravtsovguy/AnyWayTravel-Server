@@ -35,31 +35,61 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         time.sleep(1)
     return {'error':'timed out'}
 
-f = codecs.open('cities.json', "r", "utf_8" )
-cities_names = json.loads(f.read())
-f.close()
-print('loaded %d cities from cities.json'%len(cities_names))
+#LOAD CITIES BASE INTO MEMORY
+def preload_cities_info():
+    global cities_info
+    global cities_info_raw
+
+    f = codecs.open('cities.json', 'r', 'utf_8')
+    cities_info = json.loads(f.read())
+    f.close()
+
+    #cities_info_raw = requests.get('https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru').json()['response']
+
+    #cities_info_hash = { }
+    #for x in cities_info_raw:
+    #    if not x['name'] in cities_info_hash:
+    #        cities_info_hash[x['name']] = []
+    #    cities_info_hash[x['name']].append(x)
+
+    #print(len(cities_info))
+    #cities_full_info = []
+    #for x in cities_info:
+    #    #print(x['name'])
+    #    inf = 0 if not x['name'] in cities_info_hash else cities_info_hash[x['name']]
+    #    if not inf == 0 and len(inf) > 0:
+    #        if len(inf) == 0:
+    #            print('woot')
+    #        x['country_code'] = inf[0]['country_code']
+    #        x['code'] = inf[0]['code']
+    #        cities_full_info.append(x)
+    #        del inf[0]
+
+    #f = codecs.open('cities2.json','w','utf-8')
+    #f.writelines(json.dumps(cities_full_info, indent = 2, ensure_ascii = False))
+    #f.close()
+
+    print('loaded %d cities from cities.json' % len(cities_info))
+preload_cities_info()
+
 def find_cities(name_part, limit = 100):
     '''get array of city names by a part of it's names
     '''
-    global cities_names
+    global cities_info
 
     regexp = re.compile(r'(^|\W)%s' % name_part, re.IGNORECASE)
-    res = [x for x in cities_names if regexp.search(x['name']) is not None]
+    res = [x for x in cities_info if regexp.search(x['name']) is not None]
     #for r in res:
     #    aviaplaces = avia.find_places(r['name'])
     #    r['PlaceId'] = '' if len(aviaplaces) == 0 else aviaplaces[0]['PlaceId']
     res.sort(key = lambda k: k['name'])
     return ([x for x in res if x['country'] == 'Россия'] + [x for x in res if not x['country'] == 'Россия'])[:limit]
 
-def get_iata(city_name):
-    '''get IATA code of a city by it's name in russian
+def get_city(city_name):
+    '''get info of a city by it's name in russian
     '''
     global cities_info
-    if cities_info is None:
-        cities_info = requests.get('https://iatacodes.org/api/v6/cities?api_key=bb949559-7f63-460a-b5ad-affe75651a35&lang=ru').json()['response']
-    city_name = city_name.lower()
-    return str(next(x for x in cities_info if x['name'].lower() == city_name))
+    return next(x for x in cities_info if x['name'].lower() == city_name.lower())
 
 '''
 city.json and country.json was generated from csv files https://habrahabr.ru/post/21949/
@@ -76,18 +106,18 @@ def find_make_place(placename):
     global places_cache
     if placename in places_cache:
         return places_cache[placename]
-
+    
+    cities_found = find_cities(placename)
     places_found = avia.find_places(placename)
     res = { }
 
     if len(places_found) == 0:
-        cities_found = find_cities(placename)
         res = {
             'id' : '',
-            'iata' : '',
+            'iata' : '' if len(cities_found) == 0 else cities_found[0]['code'],
             'name' : placename if len(cities_found) == 0 else cities_found[0]['name'],
             'country' : '' if len(cities_found) == 0 else cities_found[0]['country'],
-            'city' : p['PlaceName'].split(" ")[0]
+            'city' : placename if len(cities_found) == 0 else cities_found[0]['name']
         }
     else:
         p = places_found[0]    
