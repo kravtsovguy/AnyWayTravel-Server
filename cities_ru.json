@@ -1,0 +1,884 @@
+[
+  {
+    "country": "Россия",
+    "code": "MOW",
+    "name": "Москва",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KGD",
+    "name": "Калининград",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OKT",
+    "name": "Октябрьский",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "LED",
+    "name": "Санкт-Петербург",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KVK",
+    "name": "Кировск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "BAX",
+    "name": "Барнаул",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "BQS",
+    "name": "Благовещенск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "RGK",
+    "name": "Горно-Алтайск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "GDG",
+    "name": "Магдагачи",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TYD",
+    "name": "Тында",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "AMV",
+    "name": "Амдерма",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ARH",
+    "name": "Архангельск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KSZ",
+    "name": "Котлас",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "LDG",
+    "name": "Лешуконское",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "MJZ",
+    "name": "Мирный",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NNM",
+    "name": "Нарьян-Мар",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ASF",
+    "name": "Астрахань",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "BCX",
+    "name": "Белорецк",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NEF",
+    "name": "Нефтекамск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UFA",
+    "name": "Уфа",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "EGO",
+    "name": "Белгород",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "BZK",
+    "name": "Брянск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UUD",
+    "name": "Улан-Удэ",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VOG",
+    "name": "Волгоград",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VUS",
+    "name": "Великий Устюг",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VGD",
+    "name": "Вологда",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "CEE",
+    "name": "Череповец",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VOZ",
+    "name": "Воронеж",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "MCX",
+    "name": "Махачкала",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IWA",
+    "name": "Иваново",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ODO",
+    "name": "Бодайбо",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "BTK",
+    "name": "Братск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IKT",
+    "name": "Иркутск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KCK",
+    "name": "Киренск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UIK",
+    "name": "Усть-Илимск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UKX",
+    "name": "Усть-Кут",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NAL",
+    "name": "Нальчик",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ESL",
+    "name": "Элиста",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KLF",
+    "name": "Калуга",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KVX",
+    "name": "Киров",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PKC",
+    "name": "Петропавловск-Камчатский",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PES",
+    "name": "Петрозаводск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KEJ",
+    "name": "Кемерово",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NOZ",
+    "name": "Новокузнецк",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VKT",
+    "name": "Воркута",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "INA",
+    "name": "Инта",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PEX",
+    "name": "Печора",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "SCW",
+    "name": "Сыктывкар",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "USK",
+    "name": "Усинск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UCT",
+    "name": "Ухта",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KMW",
+    "name": "Кострома",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "AAQ",
+    "name": "Анапа",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "GDZ",
+    "name": "Геленджик",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "EIK",
+    "name": "Ейск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KRR",
+    "name": "Краснодар",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NOI",
+    "name": "Новороссийск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ABA",
+    "name": "Абакан",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ACS",
+    "name": "Ачинск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "DKS",
+    "name": "Диксон",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "EIE",
+    "name": "Енисейск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IAA",
+    "name": "Игарка",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KJA",
+    "name": "Красноярск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NSK",
+    "name": "Норильск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "HTG",
+    "name": "Хатанга",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KRO",
+    "name": "Курган",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "URS",
+    "name": "Курск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "LPK",
+    "name": "Липецк",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "DYR",
+    "name": "Анадырь",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "GDX",
+    "name": "Магадан",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PWE",
+    "name": "Певек",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PVS",
+    "name": "Провидения",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "JOK",
+    "name": "Йошкар-Ола",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OVS",
+    "name": "Советский",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "SKX",
+    "name": "Саранск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "MMK",
+    "name": "Мурманск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PYJ",
+    "name": "Полярный",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "GOJ",
+    "name": "Нижний Новгород",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NVR",
+    "name": "Новгород",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OVB",
+    "name": "Новосибирск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OMS",
+    "name": "Омск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "REN",
+    "name": "Оренбург",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OSW",
+    "name": "Орск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OEL",
+    "name": "Орел",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PEZ",
+    "name": "Пенза",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PEE",
+    "name": "Пермь",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VVO",
+    "name": "Владивосток",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VLU",
+    "name": "Великие Луки",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "PKV",
+    "name": "Псков",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "VLK",
+    "name": "Волгодонск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ROV",
+    "name": "Ростов-на-Дону",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TGK",
+    "name": "Таганрог",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "RZN",
+    "name": "Рязань",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KUF",
+    "name": "Самара",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "BWO",
+    "name": "Балаково",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "RTW",
+    "name": "Саратов",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ADH",
+    "name": "Алдан",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ULK",
+    "name": "Ленск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NER",
+    "name": "Нерюнгри",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IKS",
+    "name": "Тикси",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "CYX",
+    "name": "Черский",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "CKH",
+    "name": "Чокурдах",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "YKS",
+    "name": "Якутск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OHH",
+    "name": "Оха",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "DEE",
+    "name": "Южно-Курильск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UUS",
+    "name": "Южно-Сахалинск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "EYK",
+    "name": "Белоярский",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "SVX",
+    "name": "Екатеринбург",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OGZ",
+    "name": "Владикавказ",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "LNX",
+    "name": "Смоленск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "MRV",
+    "name": "Минеральные Воды",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "STW",
+    "name": "Ставрополь",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TBW",
+    "name": "Тамбов",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "UUA",
+    "name": "Бугульма",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KZN",
+    "name": "Казань",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NBC",
+    "name": "Набережные Челны",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KLD",
+    "name": "Тверь",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "SWT",
+    "name": "Стрежевой",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TOF",
+    "name": "Томск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KYZ",
+    "name": "Кызыл",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TYA",
+    "name": "Тула",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KGP",
+    "name": "Когалым",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NYM",
+    "name": "Надым",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NFG",
+    "name": "Нефтеюганск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NJC",
+    "name": "Нижневартовск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NOJ",
+    "name": "Ноябрьск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "NYA",
+    "name": "Нягань",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "RAT",
+    "name": "Радужный",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "SLY",
+    "name": "Салехард",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "SGC",
+    "name": "Сургут",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TOX",
+    "name": "Тобольск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "TJM",
+    "name": "Тюмень",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "URJ",
+    "name": "Урай",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "HMA",
+    "name": "Ханты-Мансийск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IJK",
+    "name": "Ижевск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "ULY",
+    "name": "Ульяновск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KXK",
+    "name": "Комсомольск-на-Амуре",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "OHO",
+    "name": "Охотск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "KHV",
+    "name": "Хабаровск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IRM",
+    "name": "Игрим",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "MQF",
+    "name": "Магнитогорск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "CEK",
+    "name": "Челябинск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "GRV",
+    "name": "Грозный",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IGT",
+    "name": "Назрань",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "HTA",
+    "name": "Чита",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "CSY",
+    "name": "Чебоксары",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "RYB",
+    "name": "Рыбинск",
+    "country_code": "RU"
+  },
+  {
+    "country": "Россия",
+    "code": "IAR",
+    "name": "Ярославль",
+    "country_code": "RU"
+  }
+]

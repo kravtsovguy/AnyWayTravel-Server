@@ -4,12 +4,14 @@ from flask import Flask, request, Response
 import urllib
 import os
 
+import myutils
+
 from myjson import jsonify
 import trains
 import avia
-import myutils
 from time import gmtime, strftime
 import time
+import cache
 
 app = Flask(__name__)
 
@@ -104,6 +106,12 @@ def page_city_suggestions():
         return jsonify(myutils.find_cities(namepart, limit))
     except:
         return("Unexpected error:", sys.exc_info()[0])
+
+@app.route("/cachet")
+def page_cache_trains():
+    return ""
+
+myutils.cities_info = cache.select_cities(myutils.cities_info)
 
 #######################
 

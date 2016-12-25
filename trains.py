@@ -12,6 +12,7 @@ import time
 
 import avia
 import myutils
+import urllib
 
 places_cache = { }
 
@@ -38,11 +39,12 @@ def get_tickets(origin, destination, date):
 
     :param origin: Москва
     :param destination: Омск
+    :param date: 2016-12-29
     """
     return format_tickets_data(get_tickets_rawdata(origin, destination, date))
 
 def get_tickets_rawdata(origin, destination, date):
-    """get_tickets_rawdata(find_places('москва')[0], find_places('омск')[0], '30.12.2016')
+    """get_tickets_rawdata(find_places('москва')[0], find_places('омск')[0], '2016-12-29')
     """
 
     o = myutils.find_cities(origin)
@@ -87,7 +89,7 @@ def get_tickets_rawdata(origin, destination, date):
 
     rj = r.json()
 
-    if not rj['result'] == 'RID':
+    if not 'result' in rj or not rj['result'] == 'RID':
         return rj
 
     _params['rid'] = str(rj['rid'])
@@ -117,7 +119,7 @@ def format_tickets_data(data):
             'pricing' : get_pricing(route, data['tp'][0]),
             'carrier' : {
                 'name' : route['carrier'],
-                'image' : 'http://pass.rzd.ru/images/logo/logo.gif',
+                'image' : 'http://pass.rzd.ru/images/logo/logo_rzd.gif',
                 'flightNumber' : route['number'] + ('' if not 'brand' in route else ' «'+route['brand']+'»'),
                 'code' : route['carrier']
                 }
@@ -175,7 +177,14 @@ def date_to_retarded_rzd_date(date):
 def get_pricing(route, tp):
     res = []
 
-    link = 'https://pass.rzd.ru/timetable/public/ru?STRUCTURE_ID=735&refererPageId=704#dir=0|tfl=3|checkSeats=1|st0=№%20'+route['number']+'|code0='+str(tp['fromCode'])+'|dt0='+tp['date']+'|st1=|code1='+str(tp['whereCode'])
+    link = ('https://pass.rzd.ru/timetable/public/ru?STRUCTURE_ID=735&refererPageId=704#dir=0|tfl=3|checkSeats=1|st0=№%20'+
+    urllib.parse.quote(route['number'])+
+    '|code0='+
+    urllib.parse.quote(str(tp['fromCode']))+
+    '|dt0='+
+    urllib.parse.quote(tp['date'])+
+    '|st1=|code1='+
+    urllib.parse.quote(str(tp['whereCode'])))
 
     for car in route['cars']:
         res.append({

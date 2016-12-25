@@ -20,11 +20,11 @@ def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, head
         req = s.send(prepped)
 
 
-        print("code: " + str(req.status_code))
+        #print("code: " + str(req.status_code))
         if req.status_code == 200:
             r = req.json()
 
-            print(req.request.url)
+            #print(req.request.url)
             if 'result' in r:
                 if r['result'].lower() == 'error':
                     return r
