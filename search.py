@@ -133,11 +133,11 @@ def get_paths(origin, destination):
     itog = []
     if variants_1[0][1]<1000000:
         itog.append([[[origin, variants_1[0][0]],'plane'],[[variants_1[0][0], destination],'train']])
-    if variants_1[1][1]<1000000:
-        itog.append([[[origin, variants_1[1][0]],'plane'],[[variants_1[1][0], destination],'train']])
+    #if variants_1[1][1]<1000000:
+    #    itog.append([[[origin, variants_1[1][0]],'plane'],[[variants_1[1][0], destination],'train']])
     if variants_2[0][1]<1000000:
         itog.append([[[origin, variants_2[0][0]],'train'],[[variants_2[0][0], destination],'plane']])
-    if variants_2[1][1]<1000000:
-        itog.append([[[origin, variants_2[1][0]],'train'],[[variants_2[1][0], destination],'plane']])
+    #if variants_2[1][1]<1000000:
+    #    itog.append([[[origin, variants_2[1][0]],'train'],[[variants_2[1][0], destination],'plane']])
     return itog
 

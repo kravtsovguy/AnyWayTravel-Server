@@ -119,8 +119,7 @@ def page_cache_trains():
 
 #######################
 
-
-myutils.cities_info = cache.select_cities(myutils.cities_info)
+#myutils.cities_info = cache.select_cities(myutils.cities_info)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
