@@ -89,14 +89,14 @@ def get_tickets(origin, destination, date):
     except:
         return {"error":'error'}
 
-    paths = sorted(paths, key = lambda k: sum(x['pricing'][0]['price'] for x in k['segments']))[10:]
+    paths = sorted(paths, key = lambda k: sum(x['pricing'][0]['price'] for x in k['segments']))
 
     return {
         'route': {
             'origin' : myutils.find_make_place(origin),
             'destination' : myutils.find_make_place(destination),
             'departure' : date,
-            'paths' : paths
+            'paths' : paths[:10]
             }
         }
                     
