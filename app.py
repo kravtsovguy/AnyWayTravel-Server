@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, redirect
 import urllib
 import os
 
@@ -116,6 +116,10 @@ def page_cache_trains():
 
     inc_requests_counter()
     return jsonify(mixed.get_tickets(origin, destination, date))
+
+@app.route("/rzd_buy")
+def page_rzd_buy():
+    return redirect("https://pass.rzd.ru/timetable/public/ru?STRUCTURE_ID=735&refererPageId=704#dir=0|tfl=3|checkSeats=1|st0=№%20068%D0%AB|code0=2030100|dt0=03.01.2017|st1=|code1=2044700", code=302)
 
 #######################
 

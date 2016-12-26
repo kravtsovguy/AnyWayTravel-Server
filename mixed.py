@@ -57,9 +57,13 @@ def get_tickets(origin, destination, date):
                     b_segs = b_p['segments']
 
                     a_arrival = a_segs[len(a_segs)-1]['arrival']
+                    if a_arrival[-8:] < a_segs[len(a_segs)-1]['departure'][-8:]:
+                        a_arrival = add_day(a_arrival)
+                        a_segs[len(a_segs)-1]['arrival'] = a_arrival
+
                     b_departure = b_segs[0]['departure']
 
-                    #print(a_arrival,b_departure)
+                    print(a_arrival,b_departure)
 
                     if a[1] == 'plane':
                         a_arrival = avia_unify(a_arrival, a_segs[len(a_segs)-1]['destination']['city'])
@@ -75,7 +79,7 @@ def get_tickets(origin, destination, date):
                     else:
                         b_departure = train_unify(b_departure)
                         
-                    #print(a_arrival,b_departure)
+                    print(a_arrival,b_departure)
 
                     if a[1] == 'plane':
                         if search.plane_to_train[0] < b_departure - a_arrival < search.plane_to_train[1]:
@@ -114,3 +118,8 @@ def train_unify(train_date_time):
 
     t = int(t[:2]) * 3600 + int(t[3:5]) * 60 + int(t[6:])
     return t / 3600.0
+
+def add_day(datetime):
+    t = int(datetime[-8:][:2])+24
+
+    return datetime[:len(datetime)-8] + str(t) + datetime[-6:]
