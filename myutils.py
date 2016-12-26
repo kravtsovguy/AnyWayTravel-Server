@@ -8,6 +8,8 @@ import avia
 import codecs
 
 def poll_request(uri, cookies = None, params = {}, timeout = 20, sleep = 1, headers = {}, result_return_condition = (lambda r: True)):
+    time.sleep(0.5)
+
     r = {}
     while timeout > 0:
         timeout-=1

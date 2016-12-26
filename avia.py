@@ -40,13 +40,13 @@ def find_places(name=None, id=None):
 
     return requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/RU/RUB/ru-RU', params = p, headers = {'Accept' : 'application/json'}).json()['Places']
 
-def get_tickets(origin, destination, date):
+def get_tickets(origin, destination, date, only_direct = False):
     '''
     :param origin: Москва
     :param destination: Омск
     :param date: 2016-12-29
     '''
-    return format_tickets_data(get_tickets_rawdata(origin, destination, date))
+    return format_tickets_data(get_tickets_rawdata(origin, destination, date), only_direct)
 
 def get_tickets_rawdata(origin, destination, date):
 
@@ -83,7 +83,7 @@ def get_tickets_rawdata(origin, destination, date):
                                 headers = {"Accept":"application/json"}, 
                                 result_return_condition = (lambda r: r['Status'] == 'UpdatesComplete'))
 
-def format_tickets_data(data):
+def format_tickets_data(data, only_direct = False):
     if not 'Legs' in data:
         return data
 
@@ -115,6 +115,9 @@ def format_tickets_data(data):
 
             if len(segments) > 0:
                 segments[0]['pricing'] = make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)
+
+            if only_direct and len(segments) > 1:
+                continue
 
             paths.append({
                 'segments':segments

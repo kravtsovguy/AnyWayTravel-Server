@@ -12,6 +12,7 @@ import avia
 from time import gmtime, strftime
 import time
 import cache
+import mixed
 
 app = Flask(__name__)
 
@@ -107,13 +108,19 @@ def page_city_suggestions():
     except:
         return("Unexpected error:", sys.exc_info()[0])
 
-@app.route("/cachet")
+@app.route("/mixed")
 def page_cache_trains():
-    return ""
+    origin = request.args.get('origin')
+    destination = request.args.get('destination')
+    date = request.args.get('date')
 
-myutils.cities_info = cache.select_cities(myutils.cities_info)
+    inc_requests_counter()
+    return jsonify(mixed.get_tickets(origin, destination, date))
 
 #######################
+
+
+myutils.cities_info = cache.select_cities(myutils.cities_info)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
