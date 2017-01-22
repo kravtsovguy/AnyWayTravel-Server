@@ -59,7 +59,7 @@ def get_tickets(origin, destination, date):
                     a_arrival = a_segs[len(a_segs)-1]['arrival']
                     if a_arrival[-8:] < a_segs[len(a_segs)-1]['departure'][-8:]:
                         a_arrival = add_day(a_arrival)
-                        a_segs[len(a_segs)-1]['arrival'] = a_arrival
+                        #a_segs[len(a_segs)-1]['arrival'] = a_arrival
 
                     b_departure = b_segs[0]['departure']
 

@@ -9,10 +9,13 @@ import myutils
 from myjson import jsonify
 import trains
 import avia
+import avia2
 from time import gmtime, strftime
 import time
 import cache
 import mixed
+import codecs
+import json
 
 app = Flask(__name__)
 
@@ -43,9 +46,10 @@ def page_test():
     s = '<p>Valid links:</p>\n'
     arr = [
         "/city_suggestions?namepart=пете&limit=5",
-         "/tickets?origin=москва&destination=омск&date=2016-12-29",
-         "/trains?origin=москва&destination=омск&date=2016-12-29"
-         ]
+        "/avia?origin=москва&destination=омск&date=2016-12-29",
+        "/avia2?origin=MOW&destination=OMS&date=0103",
+        "/trains?origin=москва&destination=омск&date=2016-12-29"
+        ]
     for l in arr: s += '<p><a href="{url}">{url}</a></p>\n'.format(url = l)
     s += '<p>Invalid links:</p>\n'
     arr = [
@@ -59,7 +63,7 @@ def page_test():
     s += '<p>Requests completed: %d</p>' % requests_count
 
     import sys
-    return sys.getdefaultencoding() + '\n\n' + s +'\n\n'+ str(a)
+    return sys.getdefaultencoding() + '\n\n' + s + '\n\n' + str(a)
 
 @app.route("/")
 def page_hello():
@@ -70,8 +74,21 @@ def page_places_avia():
     inc_requests_counter()
     return jsonify(avia.find_places(request.args.get('name')))
 
-@app.route("/tickets")
-def page_tickets():
+@app.route("/avia2")
+def page_avia2():
+    origin = request.args.get('origin')
+    destination = request.args.get('destination')
+    date = request.args.get('date')
+
+    if 'raw' in request.args:
+        inc_requests_counter()
+        return jsonify(avia2.get_tickets_rawdata(origin, destination, date))
+
+    inc_requests_counter()
+    return jsonify(avia2.get_tickets(origin, destination, date))
+
+@app.route("/avia")
+def page_avia():
     """Get all tickets info between two points.
     """
     origin = request.args.get('origin')
@@ -117,14 +134,36 @@ def page_cache_trains():
     inc_requests_counter()
     return jsonify(mixed.get_tickets(origin, destination, date))
 
-@app.route("/rzd_buy")
+@app.route("/stress")
 def page_rzd_buy():
-    return redirect("https://pass.rzd.ru/timetable/public/ru?STRUCTURE_ID=735&refererPageId=704#dir=0|tfl=3|checkSeats=1|st0=№%20068%D0%AB|code0=2030100|dt0=03.01.2017|st1=|code1=2044700", code=302)
+    cs = ['LED','MOW','OMS','PEZ','PEE','PES','TJM']
+    s = ''
+    for a in cs:
+       for b in cs:
+          if not a == b:
+             l = "/avia2?origin="+a+"&destination="+b+"&date=0103"
+             s += '<p><a href="{url}">{url}</a></p>\n'.format(url = l)
+    return s
+
+@app.route("/fly")
+def page_fly():
+    '''
+    ?c=0102MOWOMS0502
+    '''
+    f = codecs.open('0102MOWOMS0502.json', 'r', 'utf_8')
+    inf = json.loads(f.read())
+    f.close()
+    
+    print('fixing')
+    myprint(inf)
+
+    print('sending')
+
+    return jsonify(inf)
 
 #######################
 
 #myutils.cities_info = cache.select_cities(myutils.cities_info)
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

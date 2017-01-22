@@ -113,11 +113,12 @@ def format_tickets_data(data, only_direct = False):
                             }
                         })
 
+            if only_direct and len(segments) > 1:
+                continue
+
             if len(segments) > 0:
                 segments[0]['pricing'] = make_pricing_options(next(x for x in data['Itineraries'] if x['OutboundLegId'] == leg['Id'])['PricingOptions'], data)
 
-            if only_direct and len(segments) > 1:
-                continue
 
             paths.append({
                 'segments':segments
