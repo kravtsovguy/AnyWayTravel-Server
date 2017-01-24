@@ -46,17 +46,17 @@ def page_test():
     s = '<p>Valid links:</p>\n'
     arr = [
         "/city_suggestions?namepart=пете&limit=5",
-        "/avia?origin=москва&destination=омск&date=2016-12-29",
-        "/avia2?origin=MOW&destination=OMS&date=0103",
-        "/trains?origin=москва&destination=омск&date=2016-12-29"
+        "/avia?origin=москва&destination=омск&date=2017-12-29",
+        "/avia2?origin=MOW&destination=OMS&date=2017-12-29",
+        "/trains?origin=москва&destination=омск&date=2017-12-29"
         ]
     for l in arr: s += '<p><a href="{url}">{url}</a></p>\n'.format(url = l)
     s += '<p>Invalid links:</p>\n'
     arr = [
         "/places_avia?name=Лосино-Петровский",
-        "/tickets?origin=хххххх&destination=омск&date=2016-12-29",
-        "/trains?origin=хххххх&destination=adasdasd&date=2016-10-29",
-        "/trains?origin=омск&destination=Лосино-Петровский&date=2016-10-29"
+        "/tickets?origin=хххххх&destination=омск&date=2017-12-29",
+        "/trains?origin=хххххх&destination=adasdasd&date=2017-12-29",
+        "/trains?origin=омск&destination=Лосино-Петровский&date=2017-12-29"
         ]
     for l in arr: s += '<p><a href="{url}">{url}</a></p>\n'.format(url = l)
 
