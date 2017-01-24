@@ -81,6 +81,7 @@ def format_tickets_data(data, only_direct=False):
                     'carrier' : {
                         'name' : trpInf['airCmp'],
                         'image' : 'https://www.onetwotrip.com/images/ak/small/'+trpInf['airCmp']+'.png',
+                        'imageAlt' : 'http://s1.apideeplink.com/images/airlines/'+trpInf['airCmp']+'.png',
                         'flightNumber' : trpInf['fltNm'],
                         'code' : trpInf['airCmp']
                         }
