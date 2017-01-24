@@ -25,12 +25,14 @@ def get_tickets(origin, destination, date, only_direct=False):
     return format_tickets_data(get_tickets_rawdata(origin, destination, date), only_direct)
 
 def get_tickets_rawdata(origin, destination, date):
+    parseddate = date.split('-')[2] + date.split('-')[1]
+
     params = {
         'ad' : 1,
         'cn' : 0,
         'in' : 0,
         'cs' : 'E',
-        'route' : date + origin + destination,
+        'route' : parseddate + origin + destination,
         'currency' : 'RUB',
         #'ott4862' : 'true',
         #'_' : '1485014429510'
