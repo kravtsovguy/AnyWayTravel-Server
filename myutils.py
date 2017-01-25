@@ -87,11 +87,14 @@ def find_cities(name_part, limit = 100):
     res.sort(key = lambda k: k['name'])
     return ([x for x in res if x['country'] == 'Россия'] + [x for x in res if not x['country'] == 'Россия'])[:limit]
 
-def get_city(city_name):
-    '''get info of a city by it's name in russian
+def get_city(city_name = None, iata = None):
+    '''get info of a city by it's name in russian of it's IATA code
     '''
     global cities_info
-    return next(x for x in cities_info if x['name'].lower() == city_name.lower())
+    if not city_name is None:
+        return next(x for x in cities_info if x['name'].lower() == city_name.lower())
+    else:
+        return next(x for x in cities_info if x['code'].lower() == iata.lower())
 
 '''
 city.json and country.json was generated from csv files https://habrahabr.ru/post/21949/
@@ -132,6 +135,33 @@ def find_make_place(placename):
         }
 
     places_cache[placename] = res
+    return res
+
+def make_place_by_iata(iata):
+    global places_cache
+    if iata in places_cache:
+        return places_cache[iata]
+
+    #TODO
+
+    res = {
+            'id' : iata,
+            'iata' : iata,
+            'name' : iata,
+            'country' : iata,
+            'city' : iata
+        }
+
+    #c = get_city(iata = iata)
+    #res = {
+    #        'id' : c['code'],
+    #        'iata' : c['code'],
+    #        'name' : c['name'],
+    #        'country' : c['country'],
+    #        'city' : c['name']
+    #    }
+
+    places_cache[iata] = res
     return res
 
 def check_zero_len(o, d, o_description, d_description, error_text = 'error-text'):

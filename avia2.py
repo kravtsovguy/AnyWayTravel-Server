@@ -74,10 +74,10 @@ def format_tickets_data(data, only_direct=False):
 
                 segments.append({
                     'type' : 'Plane',
-                    'origin' : trpInf['from'],
-                    'destination' : trpInf['to'],
-                    'departure' : trpInf['stDt'] + 'T' + trpInf['stTm'],
-                    'arrival' : trpInf['endDate'] + 'T' + trpInf['endTm'],
+                    'origin' : myutils.make_place_by_iata(trpInf['from']),
+                    'destination' : myutils.make_place_by_iata(trpInf['to']),
+                    'departure' : date_time(trpInf['stDt'], trpInf['stTm']),
+                    'arrival' : date_time(trpInf['endDate'], trpInf['endTm']),
                     'duration' : duration,
                     'pricing' : [],
                     'carrier' : {
@@ -124,3 +124,10 @@ def format_tickets_data(data, only_direct=False):
             'paths' : paths
             }
         }
+
+def date_time(date, time):
+    ''' takes 20170301 and 2140
+    returns 2017-12-30T04:15:00
+    '''
+
+    return date[:4] + '-'+ date[4:-2] + '-' + date[-2:] + 'T' + time[:2] + ':' + time[-2:] + ':00'
